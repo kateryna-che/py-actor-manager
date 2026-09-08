@@ -8,6 +8,14 @@ class ActorManager:
         self.db_name = db_name
         self.table_name = table_name
         self._connection = sqlite3.connect(db_name)
+        self._connection.execute(
+            f"CREATE TABLE IF NOT EXISTS {self.table_name} ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "first_name TEXT NOT NULL, "
+            "last_name TEXT NOT NULL"
+            ")"
+        )
+        self._connection.commit()
 
     def create(self, first_name: str, last_name: str) -> None:
         self._connection.execute(
